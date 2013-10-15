@@ -42,16 +42,19 @@ mock by reverve-proxy
 - config your edp config file
 - make sure that request send normally
 
+
     {
         location: /\/request\.ajax/,
         handler: mock.getQuery(response)
     }
 
--- you can test by on your *nix system as
 
-curl -d 'path=GET%2Fmaterial&userid=5&params={"level":"planinfo","fields":["optsug","planid"]}' http://localhost:8188/request.ajax
+- you can test by on your *nix system as
 
--- where response is a function return json or string
+    curl -d 'path=GET%2Fmaterial&userid=5&params={"level":"planinfo","fields":["optsug","planid"]}' http://localhost:8188/request.ajax
+
+
+- where response is a function return json or string
 
     function response(path, params) {
         return {
