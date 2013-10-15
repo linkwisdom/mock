@@ -20,9 +20,9 @@ var querystring = require('querystring');
  *     }
  */
 
-exports.getQuery = function(config) {
+exports.getQuery = function(responsor) {
     var me = this;
-    me.response = require(config.response);
+    me.response = responsor;
 
     function getContent(req) {
         var path = req.query.path;

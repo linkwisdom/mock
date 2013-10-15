@@ -18,9 +18,9 @@ var querystring = require('querystring');
 /**
  * getQuery for fc project
  */
-exports.getQuery = function(config) {
+exports.getQuery = function(responsor) {
     var fc = require('./fc');
-    return fc.getQuery(config);
+    return fc.getQuery(responsor);
 };
 
 
