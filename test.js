@@ -1,5 +1,5 @@
 
-var mock = require('./index');
+var mock = require('mockfc');
 
 // redirect localhost/note/** to bd.liandong.org/blog
 // the request response by the back-end-proxy
