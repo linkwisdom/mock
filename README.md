@@ -42,6 +42,8 @@ mock by reverve-proxy
 - config your edp config file
 - make sure that request send normally
 
+.
+
 
     {
         location: /\/request\.ajax/,
@@ -55,6 +57,9 @@ mock by reverve-proxy
 
 
 - where response is a function return json or string
+
+.
+
 
     function response(path, params) {
         return {
