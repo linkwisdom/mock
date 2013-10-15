@@ -1,7 +1,5 @@
 {
-  "author": {
-    "name": "liandong liu"
-  },
+  "author": "liandong liu",
   "name": "mockfc",
   "description": "mock file for fc",
   "version": "0.0.1",
@@ -22,5 +20,10 @@
   "engines": {
     "node": "*"
   },
-  "readme": "it's an mock reverse-proxy plugin for edp"
+  "gitHead": "57769f6d041f75486c72224fece6791db0e7f40b",
+  "scripts": {
+    "test": "node test.js"
+  },
+  "license": "BSD",
+  "readmeFilename": "README.md"
 }
