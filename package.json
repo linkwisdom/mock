@@ -1,0 +1,26 @@
+{
+  "author": {
+    "name": "liandong liu"
+  },
+  "name": "mockfc",
+  "description": "mock file for fc",
+  "version": "0.0.1",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/linkwisdom/mockfc.git"
+  },
+  "main": "./index.js",
+  "keywords": [
+    "mock",
+    "proxy",
+    "reverse",
+    "edp"
+  ],
+  "dependencies": {
+    "http-proxy": ">=0.10"
+  },
+  "engines": {
+    "node": "*"
+  },
+  "readme": "it's an mock reverse-proxy plugin for edp"
+}
