@@ -13,7 +13,6 @@ var fs          = require( 'fs' );
 var path        = require( 'path' );
 var http        = require('http');
 var url         = require('url');
-var querystring = require('querystring');
 
 /**
  * getQuery for fc project
@@ -121,7 +120,7 @@ exports.listFile = function(dirname) {
 
 exports.notFound = function(filePath) {
     return '';
-}
+};
 
 /**
  * read file from local path
@@ -129,7 +128,7 @@ exports.notFound = function(filePath) {
 exports.getFile = function(config) {
     var me  = this;
     var dir = config.dir;
-    var def = config.default || 'index.html';
+    var def = config.index || 'index.html';
     var notFound = config.notFound || me.listFile;
 
     return function(context) {
@@ -161,7 +160,7 @@ exports.getFile = function(config) {
         }
         context.start();
     };
-}
+};
 
 
 /**
@@ -199,7 +198,7 @@ exports.getProxy = function(config) {
         proxy: this.proxy(config)
     };
 
-}
+};
 
 /**
  * 将当前请求建立反向代理

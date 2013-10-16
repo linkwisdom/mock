@@ -35,17 +35,18 @@ mock.startServer(config);
  * -------------------------------------------------
  */
 
-    {
+    var option = {
         location: /\/note/,
         handler: mock.proxy(
             {
                 host: 'bd.liandong.org',
-                port: 80, reset: true, 
+                port: 80,
+                reset: true, 
                 replace: [
                     {source: 'note/', target: 'blog/'},
                     {source: /\.ajax$/g, target: '.php'},
-                    {source: /\.css$/g, target: '.less'},
+                    {source: /\.css$/g, target: '.less'}
                 ]
             }
         )
-    }
+    };
