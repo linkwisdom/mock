@@ -9,10 +9,11 @@
  *  
  */
 
-var fs          = require( 'fs' );
-var path        = require( 'path' );
-var http        = require('http');
-var url         = require('url');
+var fs      = require( 'fs' );
+var path    = require( 'path' );
+var http    = require('http');
+var url     = require('url');
+var Cookie  = require('./cookie');
 
 /**
  * getQuery for fc project
@@ -39,7 +40,8 @@ exports.startServer = function(config) {
     console.log('starting....');
 
     // 启动一项服务
-    http.createServer(function (request, response) {
+    http.createServer(function(request, response) {
+        
 
         request.query = url.parse(request.url);
 
@@ -81,7 +83,7 @@ exports.listFile = function(dirname) {
 
 
     do {
-        flag = path.existsSync(dirname);
+        flag = fs.existsSync(dirname);
         if (flag) {
             break;
         }
@@ -173,32 +175,82 @@ exports.getProxy = function(config) {
         resolve: function(context) {
             var flag = false;
             var query= context.request.query;
-            var locates = config.locates;
+            var replace = config.replace;
             var pathname = query.pathname;
+            var flag = false;
 
-            for (var item in locates) {
-                var idx = pathname.indexOf(item);
-                var target = config.locates[item];
+            for (var item in replace) {
+                var source = replace[item].source;
 
-                if (idx > -1) {
-                    pathname = pathname.replace(item, target);
-                    flag = true;
+                flag = flag || (source.test && source.test(pathname));
+                flag = flag || (pathname.indexOf(source) > -1);
+
+                if (flag) {
                     break;
                 }
             }
 
             if (flag) {
-                var url = context.request.url;
-                context.request.url = url.replace(query.pathname, pathname);
-                this.proxy(context);
+                this.response(context);
+                return true;
             }
-
-            return flag;
         },
-        proxy: this.proxy(config)
+        response: this.proxy(config)
     };
 
 };
+
+/**
+ * modify cookies for proxy
+ * @param  {object} headers request.headers
+ * @param  {object} params  cookie to be set
+ */
+function modCookie(headers, params) {
+    var str = headers.cookie;
+
+    var lst = str.match(/([^=;]*)=([^=;]*);/g);
+
+    var cookie = lst.filter(function(item) {
+        var km = item.split('=');
+
+        var key = km[0];
+
+        if (key in params) {
+            return false;
+        }
+
+        return item;
+    });
+
+    for (var item in params) {
+        cookie.push(item + '=' + params[item]);
+    }
+
+    headers.cookie = cookie.join('&');
+}
+
+function modRequest(request, config) {
+    var params = config.postParams;
+
+    var cookie = config.cookie;
+
+    var replace = config.replace;
+
+    var headers = request.headers;
+
+    //rewrite bodydata
+    if (params) {}
+
+    if (cookie) {
+        modCookie(headers, cookie);
+    }
+
+    if (replace) {
+        replace.forEach(function(rep) {
+            request.url = request.url.replace(rep.source, rep.target);
+        });
+    }
+}
 
 /**
  * 将当前请求建立反向代理
@@ -220,8 +272,8 @@ exports.proxy = function(config) {
         var response = context.response;
         var request = context.request;
 
-        if (config.reset) {
-             // 清理EDP绑定的事件，且需求重新发送请求
+        //if request-databody are buffered, reset it
+        if (request.bodyBuffer) {
             request.removeAllListeners('data');
             request.removeAllListeners('end');
 
@@ -239,12 +291,10 @@ exports.proxy = function(config) {
             context.stop();
         }
 
-        if (config.replace) {
-            config.replace.forEach(function(rep) {
-                request.url = request.url.replace(rep.source, rep.target);
-            });
-        }
+        // mod request, postData, cookie, url, etc
+        modRequest(request, config);
 
+        //var cookie = new Cookie(request, response);
         proxy.proxyRequest(request, response, proxyConfig);
         
     };

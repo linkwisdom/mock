@@ -1,20 +1,21 @@
 
-var mock = require('mockfc');
+var mock = require('./index');
 
 // redirect localhost/note/** to bd.liandong.org/blog
 // the request response by the back-end-proxy
 var proxyConfig = {
     host: 'bd.liandong.org',
     port: 80,
-    locates: {
-        '/note': '/blog'
-    }
+    cookie: {name:'linkwisdom'},
+    replace: [
+        {source: '/note', target: '/blog'}
+    ]
 };
 
 
 var config = {
     service: 'getFile',
-    port: 8080,
+    port: 8087,
     dir: './',
     proxy: proxyConfig
 };
@@ -41,7 +42,6 @@ mock.startServer(config);
             {
                 host: 'bd.liandong.org',
                 port: 80,
-                reset: true, 
                 replace: [
                     {source: 'note/', target: 'blog/'},
                     {source: /\.ajax$/g, target: '.php'},
