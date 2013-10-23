@@ -175,19 +175,23 @@ exports.getProxy = function(config) {
         resolve: function(context) {
             var flag = false;
             var query= context.request.query;
-            var replace = config.replace;
+            var replace = config.replace || [];
+            var path = config.path || [];
             var pathname = query.pathname;
             var flag = false;
 
+            path.forEach(function(item) {
+                flag = flag || (pathname.indexOf(item) > -1);
+            });
+
             for (var item in replace) {
-                var source = replace[item].source;
-
-                flag = flag || (source.test && source.test(pathname));
-                flag = flag || (pathname.indexOf(source) > -1);
-
                 if (flag) {
                     break;
                 }
+
+                var source = replace[item].source;
+                flag = flag || (source.test && source.test(pathname));
+                flag = flag || (pathname.indexOf(source) > -1);   
             }
 
             if (flag) {

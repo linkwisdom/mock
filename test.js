@@ -6,9 +6,10 @@ var mock = require('./index');
 var proxyConfig = {
     host: 'bd.liandong.org',
     port: 80,
-    cookie: {name:'linkwisdom'},
+    path: ['/project'],
+   // cookie: {name:'linkwisdom'},
     replace: [
-        {source: '/note', target: '/blog'}
+        {source: '/project/114', target: '/project/114'}
     ]
 };
 
