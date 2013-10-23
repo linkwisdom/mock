@@ -13,7 +13,7 @@ var fs      = require( 'fs' );
 var path    = require( 'path' );
 var http    = require('http');
 var url     = require('url');
-var Cookie  = require('./cookie');
+//var Cookie  = require('./cookie');
 
 /**
  * getQuery for fc project
