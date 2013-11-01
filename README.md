@@ -21,11 +21,13 @@ mock by reverve-proxy
     // the request response by the back-end-proxy
 
     var proxyConfig = {
-        host: 'note.liandong.org',
+        host: 'bd.liandong.org',
         port: 80,
-        locates: {
-            '/photo': '/blog'
-        }
+       // path: ['/project'],
+       // cookie: {name:'linkwisdom'},
+        replace: [
+            {source: '/project/114', target: '/project/114'}
+        ]
     };
 
 
