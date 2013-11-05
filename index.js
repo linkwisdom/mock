@@ -23,9 +23,15 @@ exports.getQuery = function(responsor) {
     return fc.getQuery(responsor);
 };
 
-exports.runJS = function(responsor) {
+exports.runJS = function(param) {
     var fc = require('./fc');
     var runjs = require('./run');
+
+    param || (param = {});
+    for (var item in param) {
+        runjs[item] = param[item];
+    }
+    
     return fc.getQuery(runjs);
 };
 
