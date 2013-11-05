@@ -50,29 +50,36 @@ mock by reverve-proxy
         handler: mock.runJS({sourceDir: './debug/response'})
     }
 
+
+
 - make sure that your request has parameter `path` and post-data parameter `param`
-- nodejs run the jsfile content with  `runInNewContext` 
-- to make sure your mock program run instant without restart your server
-- it's easy to write in mock-program
+ nodejs run the jsfile content with  `runInNewContext` 
+ to make sure your mock program run instant without restart your server
+ it's easy to write in mock-program
+
+.
 
     console.log({msg: 'the first message'});
 
-- souds too easy
-- follow objects are eported for you
+
+- souds too easy, 
+   follow objects are eported for you
     path: the request-path
     param: the post-data
     console.log: you just need log your data, eaquals console.dump
 
 - you also can customize your mock apps for mock.runJs arguments
 
+.
 
     mock.runJS = function(param);
+    param.sourceDir
+    param.runJS = function(code, path, param)
+    param.pack  = function(data) 
+    param.getContent = function(pathName, param)
+    param.getResult = function(pathName, param)
 
-    @param.sourceDir 
-    @param.runJS = function(code, path, param)
-    @param.pack  = function(data) 
-    @param.getContent = function(pathName, param)
-    @param.getResult = function(pathName, param)
+
 
 - for more detail knowleade, you can learn it from the source code 
 
