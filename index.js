@@ -23,6 +23,11 @@ exports.getQuery = function(responsor) {
     return fc.getQuery(responsor);
 };
 
+exports.runJS = function(responsor) {
+    var fc = require('./fc');
+    var runjs = require('./run');
+    return fc.getQuery(runjs);
+};
 
 /**
  * start a stand-alone web server
@@ -123,6 +128,7 @@ exports.listFile = function(dirname) {
 exports.notFound = function(filePath) {
     return '';
 };
+
 
 /**
  * read file from local path
