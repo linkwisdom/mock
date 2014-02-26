@@ -2,7 +2,7 @@
   "author": "liandong liu",
   "name": "mockfc",
   "description": "mock file for fc",
-  "version": "0.0.4",
+  "version": "0.0.8",
   "repository": {
     "type": "git",
     "url": "git://github.com/linkwisdom/mock.git"
@@ -15,7 +15,7 @@
     "edp"
   ],
   "dependencies": {
-    "http-proxy": ">=0.10"
+    "http-proxy": "<=0.10.4"
   },
   "engines": {
     "node": "*"
